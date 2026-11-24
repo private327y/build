@@ -8,9 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q EvoFoxBridge-Mapper.zip
-      - name: Fix Java target
+      - name: Fix Java target and code
         run: |
           sed -i 's/^android {/android {\n    compileOptions {\n        sourceCompatibility = JavaVersion.VERSION_17\n        targetCompatibility = JavaVersion.VERSION_17\n    }\n    kotlinOptions { jvmTarget = "17" }/' EvoFoxBridge/app/build.gradle.kts
+          sed -i 's/event\.isGamepadButton/KeyEvent.isGamepadButton(keyCode)/g' EvoFoxBridge/app/src/main/java/com/varun/evofoxbridge/MainActivity.kt
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
