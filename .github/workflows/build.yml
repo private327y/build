@@ -8,6 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q EvoFoxBridge-Mapper.zip
+      - name: Fix Java target
+        run: |
+          sed -i 's/^android {/android {\n    compileOptions {\n        sourceCompatibility = JavaVersion.VERSION_17\n        targetCompatibility = JavaVersion.VERSION_17\n    }\n    kotlinOptions { jvmTarget = "17" }/' EvoFoxBridge/app/build.gradle.kts
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
